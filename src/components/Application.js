@@ -26,7 +26,6 @@ export default function Application(props) {
   const interviewers = getInterviewersForDay(state, state.day);
 
   function bookInterview(id, interview) {
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -36,6 +35,21 @@ export default function Application(props) {
       [id]: appointment,
     };
 
+    setState({
+      ...state,
+      appointments,
+    });
+  }
+
+  function deleteInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
     setState({
       ...state,
       appointments,
@@ -52,6 +66,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         bookInterview={bookInterview}
+        deleteInterview={deleteInterview}
         interviewers={interviewers}
       />
     );
@@ -95,7 +110,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        <Appointment key="last" time="5pm"/>
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
